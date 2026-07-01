@@ -1,4 +1,3 @@
-<img width="1008" height="449" alt="Screenshot 2026-07-02 at 00 56 53" src="https://github.com/user-attachments/assets/1d6b0638-5741-4545-a24b-ae8882413fde" />
 # Environmental Health Intelligence Agent
 
 A verifiable AI agent for environmental, ESG, and public health monitoring.
