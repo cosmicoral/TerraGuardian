@@ -13,9 +13,6 @@ The project demonstrates how real-world data can be analyzed by AI, recorded on-
 
 --------
 ## Workflow Architecture
-<img width="1017" height="439" alt="Screenshot 2026-07-02 at 00 57 16" src="https://github.com/user-attachments/assets/b67c3b01-ea08-49d8-8734-f38edbf6c63a" />
-
-## Workflow Architecture
 
 <img width="1017" height="439" alt="Workflow Architecture" src="https://github.com/user-attachments/assets/b67c3b01-ea08-49d8-8734-f38edbf6c63a">
 
