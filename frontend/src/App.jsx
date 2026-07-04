@@ -45,6 +45,12 @@ function App() {
   const zkRecord = createZkVerifyRecord(alert);
   const riskWidth = `${riskScore}%`;
   const riskLabel = riskScore <= 30 ? "Low Risk" : riskScore <= 70 ? "Medium Risk" : "High Risk";
+  const publicHealthThreshold = 30;
+  const climateThreshold = 3;
+  const publicHealthDecision =
+    riskScore >= publicHealthThreshold ? "Trigger Alert" : "Monitor Only";
+  const climateDecision =
+    climate?.riskLevel >= climateThreshold ? "Trigger Alert" : "Monitor Only";
   return (
     <main className="min-h-screen bg-[#050816] text-white">
       <div className="mx-auto max-w-7xl px-6 py-8">
@@ -174,6 +180,40 @@ function App() {
             </div>
           </div>
         </section>
+
+            <section className="mt-6 rounded-[2rem] border border-emerald-500/30 bg-emerald-950/20 p-6">
+      <div className="mb-5">
+        <p className="text-sm font-semibold uppercase tracking-[0.25em] text-emerald-300">
+          Agent Decision Gate
+        </p>
+        <h2 className="mt-2 text-xl font-bold">
+          Risk Threshold Evaluation
+        </h2>
+      </div>
+
+      <div className="grid gap-4 md:grid-cols-2">
+        <Info
+          label="Public Health Decision"
+          value={publicHealthDecision}
+        />
+        <Info
+          label="Climate Decision"
+          value={climateDecision}
+        />
+        <Info
+          label="Health Threshold"
+          value={`${publicHealthThreshold}/100`}
+        />
+        <Info
+          label="Climate Threshold"
+          value={`${climateThreshold}/5`}
+        />
+      </div>
+
+      <p className="mt-5 text-sm leading-6 text-slate-400">
+        The agent evaluates AI-generated and climate-derived risk scores before deciding whether to trigger an on-chain alert.
+      </p>
+    </section>
 
   <section className="mt-6 rounded-[2rem] border border-slate-800 bg-slate-900/60 p-6">
           <h2 className="text-xl font-bold">Workflow</h2>

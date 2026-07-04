@@ -7,7 +7,7 @@
 ![Sepolia](https://img.shields.io/badge/Sepolia-Testnet-purple)
 
 
-A verifiable AI application that combines **Chainlink CRE**, **Gemini 2.5 Flash**, **Solidity**, and **React** to generate transparent on-chain public health intelligence.
+A verifiable AI application that combines **Chainlink CRE**, **Gemini 2.5 Flash**, **Solidity**, and **React** to generate transparent on-chain public health and climate intelligence.
 
 The project demonstrates how real-world data can be analyzed by AI. The agent evaluates AI-generated risk scores against configurable thresholds before deciding whether to trigger an on-chain alert.
 
