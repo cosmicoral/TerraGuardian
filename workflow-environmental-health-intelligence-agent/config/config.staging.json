@@ -5,6 +5,6 @@
   "openMeteoApiUrl": "https://api.open-meteo.com/v1/forecast",
   "geminiApiUrl": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent",
   "alertThreshold": "30",
-  "healthAlertRegistryAddress": "0x82538b6B17e74eFcCA2f3b95E69e0354F53808AE",
+  "healthAlertRegistryAddress": "0x54910B770A045c04672Cb53Db4b0b80812237370",
   "gasLimit": "500000"
 }

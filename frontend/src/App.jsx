@@ -1,12 +1,12 @@
 import "./index.css";
 import { useEffect, useState } from "react";
-import { getLatestAlert } from "./services/blockchain";
+import { getLatestAlert, getLatestClimateAlert } from "./services/blockchain";
 import { createZkVerifyRecord } from "./services/zkverify";
 import { getClimateRisk } from "./services/climate";
 
 const modules = [
   { icon: "🦠", title: "Public Health", status: "Active", color: "emerald", text: "CDC + Gemini live risk workflow" },
-  { icon: "🌡️", title: "Heatwave", status: "Next", color: "amber", text: "Connect Heatwave-Proof-AI module" },
+  { icon: "🌡️", title: "Heatwave", status: "Active", color: "amber", text: "Connect Heatwave-Proof-AI module" },
   { icon: "🌱", title: "EU ESG", status: "Planned", color: "lime", text: "Carbon, water, energy indicators" },
   { icon: "🔐", title: "zkVerify", status: "Planned", color: "violet", text: "Proof-backed AI and data outputs" },
   { icon: "📈", title: "The Graph", status: "Planned", color: "sky", text: "Index alerts for dashboards" },
@@ -16,6 +16,7 @@ function App() {
   const [alert, setAlert] = useState(null);
   const [loading, setLoading] = useState(true);
   const [climate, setClimate] = useState(null);
+  const [chainClimate, setChainClimate] = useState(null);
   useEffect(() => {
   async function loadAlert() {
     try {
@@ -37,8 +38,18 @@ function App() {
     }
   }
 
+  async function loadChainClimate() {
+  try {
+    const latest = await getLatestClimateAlert();
+    setChainClimate(latest);
+  } catch (err) {
+    console.error(err);
+  }
+}
+
   loadAlert();
   loadClimate();
+  loadChainClimate();
 }, []);
 
   const riskScore = alert?.riskScore ?? 0;
@@ -92,15 +103,15 @@ function App() {
     </div>
 
     <span className="rounded-full bg-amber-400/10 px-3 py-1 text-sm font-semibold text-amber-300">
-      {climate ? "Live Climate Data" : "Loading"}
+      {chainClimate ? "On-chain Climate Alert" : climate ? "Live Climate Data" : "Loading"}
     </span>
   </div>
 
   <div className="mt-5 grid gap-4 md:grid-cols-4">
-    <Info label="City" value={climate?.city || "Loading"} />
-    <Info label="Temperature" value={climate ? `${climate.temperature}°C` : "Loading"} />
-    <Info label="Humidity" value={climate ? `${climate.humidity}%` : "Loading"} />
-    <Info label="Risk Level" value={climate ? `${climate.riskLevel}/5` : "Loading"} />
+    <Info label="City" value={chainClimate?.city || climate?.city || "Loading"} />
+    <Info label="Temperature" value={chainClimate ? `${chainClimate.temperature}°C` : climate ? `${climate.temperature}°C` : "Loading"} />
+    <Info label="Humidity" value={chainClimate ? `${chainClimate.humidity}%` : climate ? `${climate.humidity}%` : "Loading"} />
+    <Info label="Risk Level" value={chainClimate ? `${chainClimate.riskLevel}/5` : climate ? `${climate.riskLevel}/5` : "Loading"} />
   </div>
 
   <div className="mt-5 rounded-3xl border border-slate-800 bg-black/30 p-6">
@@ -108,10 +119,10 @@ function App() {
       Safety Advice
     </p>
     <p className="mt-4 text-lg leading-8 text-slate-200">
-      {climate?.safetyAdvice || "Fetching climate risk data from Open-Meteo..."}
+      {chainClimate?.safetyAdvice || climate?.safetyAdvice || "Fetching climate risk data from Open-Meteo..."}
     </p>
     <p className="mt-4 text-sm text-slate-500">
-      Source: {climate?.source || "Open-Meteo API"}
+      Source: {chainClimate?.dataSource || climate?.source || "Open-Meteo API"}
     </p>
   </div>
 </section>

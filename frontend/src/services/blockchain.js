@@ -1,7 +1,7 @@
 import { BrowserProvider, Contract } from "ethers";
 import contractJson from "./abi/HealthAlertRegistry.json";
 
-const CONTRACT_ADDRESS = "0x82538b6B17e74eFcCA2f3b95E69e0354F53808AE";
+const CONTRACT_ADDRESS = "0x54910B770A045c04672Cb53Db4b0b80812237370";
 
 export async function getContract() {
   if (!window.ethereum) {
@@ -39,5 +39,31 @@ export async function getLatestAlert() {
     riskScore: Number(latest.riskScore),
     summary: latest.summary,
     timestamp: Number(latest.timestamp),
+  };
+}
+
+export async function getLatestClimateAlert() {
+  const contract = await getContract();
+
+  const count = await contract.getClimateAlertCount();
+
+  if (count === 0n) {
+    return null;
+  }
+
+  const latest = await contract.getLatestClimateAlert();
+
+  return {
+    alertId: Number(latest.alertId),
+    city: latest.city,
+    temperature: Number(latest.temperature) / 10,
+    humidity: Number(latest.humidity),
+    uvIndex: Number(latest.uvIndex),
+    riskLevel: Number(latest.riskLevel),
+    safetyAdvice: latest.safetyAdvice,
+    dataSource: latest.dataSource,
+    evidenceHash: latest.evidenceHash,
+    timestamp: Number(latest.timestamp),
+    publisher: latest.publisher,
   };
 }
