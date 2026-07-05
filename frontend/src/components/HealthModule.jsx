@@ -6,7 +6,9 @@ function HealthModule({ alert, loading }) {
   const riskWidth = `${riskScore}%`;
   const riskLabel =
     riskScore <= 30 ? "Low Risk" : riskScore <= 70 ? "Medium Risk" : "High Risk";
-
+  const analysisTime = alert?.timestamp
+    ? new Date(alert.timestamp * 1000).toLocaleString()
+  : "Waiting...";
   return (
     <section className="mt-6 rounded-[2rem] border border-cyan-500/20 bg-cyan-950/10 p-6">
       <div className="mb-6 flex items-center justify-between gap-4">
@@ -42,21 +44,45 @@ function HealthModule({ alert, loading }) {
           <p className="mt-5 text-lg font-semibold text-emerald-300">{riskLabel}</p>
           <p className="mt-2 text-sm leading-6 text-slate-400">
             Based on CDC hospitalization data analyzed by Gemini.
-          </p>
+            </p>
+
+            <p className="mt-3 text-xs text-slate-500">
+            Analysis Time: {analysisTime}
+            </p>
         </div>
 
         <div className="rounded-[2rem] border border-slate-800 bg-slate-900/80 p-8 shadow-2xl">
           <div className="mb-6 flex flex-wrap gap-3">
-            <Badge>CDC Open Data</Badge>
-            <Badge>Gemini 2.5 Flash</Badge>
-            <Badge>Sepolia Registry</Badge>
+            <Badge>CDC Open Data ✓</Badge>
+            <Badge>Gemini 2.5 Flash ✓</Badge>
+            <Badge>Sepolia Registry ✓</Badge>
           </div>
 
           <div className="grid gap-5 md:grid-cols-2">
-            <Info label="Disease" value={alert?.disease || "No alert yet"} />
-            <Info label="Region" value={alert?.region || "No alert yet"} />
-            <Info label="Source" value={alert?.source || "Waiting for on-chain data"} />
-            <Info label="Status" value={alert ? "Loaded from Sepolia" : "No on-chain alert yet"} />
+           <Info label="Disease" value={alert?.disease || "No alert"} />
+
+            <Info label="Region" value={alert?.region || "No alert"} />
+
+            <Info label="Source" value={alert?.source || "Waiting"} />
+
+            <Info
+            label="Status"
+            value={alert ? "Verified • Loaded from Sepolia" : "Waiting"}
+            />
+
+            <Info
+            label="Recorded At"
+            value={
+                alert?.timestamp
+                ? new Date(alert.timestamp * 1000).toLocaleString()
+                : "Waiting"
+            }
+            />
+
+            <Info
+            label="Network"
+            value="Sepolia Testnet"
+            />
           </div>
 
           <div className="mt-8 rounded-3xl border border-slate-800 bg-black/30 p-6">
