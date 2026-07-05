@@ -7,34 +7,25 @@
 ![Sepolia](https://img.shields.io/badge/Sepolia-Testnet-purple)
 
 
-A verifiable AI agent that combines **public health data**, **live climate observations**, **Chainlink CRE**, **Gemini 2.5 Flash**, **Solidity**, and **React** to generate transparent environmental intelligence and decide whether verified alerts should be published on-chain.
+An AI-powered environmental intelligence agent that combines public health data, live climate observations, Chainlink CRE workflows, Gemini 2.5 Flash, Solidity smart contracts, and a React dashboard to monitor real-world risks and publish selected alerts to the Sepolia test network.
 
-The project demonstrates how real-world data can be analyzed by AI. The agent evaluates AI-generated risk scores against configurable thresholds before deciding whether to trigger an on-chain alert.
-
+The project demonstrates how multiple real-world data sources can be analyzed by AI and evaluated through deterministic decision logic before being recorded on-chain.
 --------
 ## Workflow Architecture
 
 <img width="1017" height="439" alt="Workflow Architecture" src="https://github.com/user-attachments/assets/b67c3b01-ea08-49d8-8734-f38edbf6c63a">
 
 ---
+## Features
 
-# Features
-
-✅ CDC Open Data
-
-✅ Open-Meteo Climate Data
-
-✅ Multi-source Decision Gate
-
-✅ Gemini Risk Analysis
-
-✅ Chainlink CRE Workflow
-
-✅ Solidity Registry
-
-✅ React Dashboard
-
-✅ Sepolia Deployment
+- ✅ CDC Open Data integration
+- ✅ Open-Meteo climate monitoring
+- ✅ Gemini 2.5 Flash risk analysis
+- ✅ Dual-source decision gate
+- ✅ Chainlink CRE workflow simulation
+- ✅ Solidity smart contract registry
+- ✅ Sepolia deployment
+- ✅ React dashboard with live on-chain data
 
 ---
 
@@ -42,65 +33,55 @@ The project demonstrates how real-world data can be analyzed by AI. The agent ev
 
 ```
 
-CDC Open Data
-          \
-           \
-            \
-             ▼
-         Gemini AI
-             ▲
-             │
-Open-Meteo Weather API
-             │
-             ▼
+CDC Open Data        Open-Meteo API
+       \               /
+        \             /
+         ▼           ▼
+      Gemini Analysis
+              │
+              ▼
       Decision Gate
-             │
-      publish?
-       yes / no
-             │
-             ▼
-     Chainlink CRE
-             │
-             ▼
-HealthAlertRegistry
-             │
-             ▼
- Sepolia
-             │
-             ▼
- React Dashboard
+              │
+              ▼
+     Chainlink CRE Workflow
+              │
+              ▼
+   HealthAlertRegistry.sol
+              │
+              ▼
+           Sepolia
+              │
+              ▼
+      React Dashboard
 
 ```
 
 ---
+## Current Agent Workflow
 
-# Current Agent Workflow
+1. A Chainlink CRE workflow starts the monitoring process.
 
-1. Chainlink CRE cron trigger starts the workflow.
+2. Fetch public health data from CDC Open Data.
 
-2. Fetch CDC public health data.
+3. Fetch live weather observations from Open-Meteo.
 
-3. Fetch Open-Meteo climate observations.
+4. Gemini evaluates health-related indicators.
 
-4. Gemini analyzes the public health dataset.
+5. A deterministic decision gate evaluates:
 
-5. A deterministic Decision Gate evaluates:
-
-   • AI health risk
-
-   • Climate risk
+   - Health risk
+   - Climate risk
 
 6. If either threshold is exceeded:
 
-   • encode report
-
-   • publish on-chain
+   - prepare the alert payload
+   - publish to the deployed Solidity contract on Sepolia
 
 7. Otherwise:
 
-   • skip publication
+   - skip blockchain publication
 
-8. React dashboard reads alerts from Sepolia.
+8. The React dashboard reads the latest alerts directly from the deployed smart contract.
 
 # Agent Decision Logic
 
