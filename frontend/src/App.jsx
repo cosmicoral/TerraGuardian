@@ -69,6 +69,7 @@ function App() {
         <Header />
 
         <ClimateModule climate={climate} chainClimate={chainClimate} />
+        <ESGModule esg={esg} />
 
         <HealthModule alert={alert} loading={loading} />
 

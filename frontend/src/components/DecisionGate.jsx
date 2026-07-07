@@ -11,6 +11,11 @@ function DecisionGate({ alert, climate }) {
 
   const climateDecision =
     climate?.riskLevel >= climateThreshold ? "Trigger Alert" : "Monitor Only";
+  
+  const esgDecision =
+     esg?.forecast >= esgThreshold
+     ? "Tirgger Alert"
+     : "Monitor Only";
 
   return (
     <section className="mt-6 rounded-[2rem] border border-emerald-500/30 bg-emerald-950/20 p-6">
@@ -26,6 +31,7 @@ function DecisionGate({ alert, climate }) {
         <Info label="Climate Decision" value={climateDecision} />
         <Info label="Health Threshold" value={`${publicHealthThreshold}/100`} />
         <Info label="Climate Threshold" value={`${climateThreshold}/5`} />
+        <Info label="Esg Decision" value ={esgDecision} />
       </div>
 
       <p className="mt-5 text-sm leading-6 text-slate-400">
