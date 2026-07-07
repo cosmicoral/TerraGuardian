@@ -7,6 +7,7 @@ import { getCarbonIntensity } from "./services/esg";
 import Header from "./components/Header";
 import ClimateModule from "./components/ClimateModule";
 import HealthModule from "./components/HealthModule";
+import ESGModule from "./components/ESGModule";
 import DecisionGate from "./components/DecisionGate";
 import Workflow from "./components/Workflow";
 import ModuleGrid from "./components/ModuleGrid";
@@ -46,7 +47,8 @@ function App() {
       } catch (err) {
         console.error(err);
       }
-    
+    }
+
     async function loadEsg() {
       try {
         const latest = await getCarbonIntensity();
@@ -54,7 +56,6 @@ function App() {
       } catch (err) {
         console.error(err);
       }
-    }
     }
 
     loadAlert();
@@ -73,7 +74,7 @@ function App() {
 
         <HealthModule alert={alert} loading={loading} />
 
-        <DecisionGate alert={alert} climate={chainClimate || climate} />
+        <DecisionGate alert={alert} climate={chainClimate || climate} esg={esg} />
 
         <Workflow />
 

@@ -1,6 +1,6 @@
 import Info from "./Info";
 
-function DecisionGate({ alert, climate }) {
+function DecisionGate({ alert, climate, esg }) {
   const publicHealthThreshold = 30;
   const climateThreshold = 3;
 
@@ -12,9 +12,10 @@ function DecisionGate({ alert, climate }) {
   const climateDecision =
     climate?.riskLevel >= climateThreshold ? "Trigger Alert" : "Monitor Only";
   
+  const esgThreshold = 200;
   const esgDecision =
      esg?.forecast >= esgThreshold
-     ? "Tirgger Alert"
+     ? "Trigger Alert"
      : "Monitor Only";
 
   return (
@@ -29,13 +30,14 @@ function DecisionGate({ alert, climate }) {
       <div className="grid gap-4 md:grid-cols-2">
         <Info label="Public Health Decision" value={publicHealthDecision} />
         <Info label="Climate Decision" value={climateDecision} />
+        <Info label="Esg Decision" value ={esgDecision} />
         <Info label="Health Threshold" value={`${publicHealthThreshold}/100`} />
         <Info label="Climate Threshold" value={`${climateThreshold}/5`} />
-        <Info label="Esg Decision" value ={esgDecision} />
+        <Info label="ESG Threshold" value={`${esgThreshold} gCO₂/kWh`} />
       </div>
 
       <p className="mt-5 text-sm leading-6 text-slate-400">
-        The agent evaluates AI-generated and climate-derived risk scores before deciding whether to trigger an on-chain alert.
+        The agent evaluates AI-generated health risk, climate risk, and carbon intensity before deciding whether to trigger an on-chain alert.
       </p>
     </section>
   );
