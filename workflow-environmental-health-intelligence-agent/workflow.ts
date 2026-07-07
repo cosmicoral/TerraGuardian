@@ -68,7 +68,10 @@ export function on10MinHealthCheck(runtime: Runtime<Config>, payload: CronPayloa
             method: 'GET',
            url: runtime.config.cdcApiUrl,
           }).result()
-          if (res.statusCode !== 200) throw new Error(`HTTP GET failed: ${res.statusCode}`)
+          if (res.statusCode !== 200) {
+            const errorBody = Buffer.from(res.body).toString("utf-8")
+            throw new Error(`CDC HTTP GET failed: ${res.statusCode} ${errorBody}`)
+          }
           // TODO: parse and return response
           return JSON.parse(Buffer.from(res.body).toString('utf-8'))
         },
@@ -276,11 +279,19 @@ const climateThreshold = 3
 const shouldPublishClimate =
   climateRisk >= climateThreshold
 
+//ESG decision
+
+const esgThreshold = 3
+
+const shouldPublishESG =
+
+  esgRisk >= esgThreshold
+
 runtime.log(
-  `Decision Gate -> health=${shouldPublishHealth}, climate=${shouldPublishClimate}`
+  `Decision Gate -> health=${shouldPublishHealth}, climate=${shouldPublishClimate}, esg=${shouldPublishESG}`
 )
 
-if (!shouldPublishHealth && !shouldPublishClimate) {
+if (!shouldPublishHealth && !shouldPublishClimate && !shouldPublishESG) {
   runtime.log("No critical risk detected. Skipping on-chain alert.")
   return "Skipped"
 }
@@ -291,7 +302,10 @@ runtime.log("Critical risk detected. Preparing blockchain transaction.")
     `${geminiResponse.summary} ` +
     `Climate signal: London temperature ${temperature}°C, humidity ${humidity}%, ` +
     `UV index ${uvIndex}, climate risk ${climateRisk}/5. ` +
-    `Advice: ${climateAdvice}`
+    `Advice: ${climateAdvice} ` +
+      `ESG signal: carbon intensity ${carbonActual} gCO₂/kWh, forecast ${carbonForecast} gCO₂/kWh, ` +
+      `index ${carbonIndex}, ESG risk ${esgRisk}/5. ` +
+      `ESG advice: ${esgAdvice}`
   
   // ── zkVerify-ready Proof Package ─────────────────────────────
 
@@ -305,6 +319,11 @@ const proofPayload = JSON.stringify({
   temperature,
   humidity,
   uvIndex,
+  carbonActual,
+  carbonForecast,
+  carbonIndex,
+  carbonFrom,
+  carbonTo,
   generatedAt: String(payload.scheduledExecutionTime),
 })
 
@@ -329,7 +348,7 @@ if (!zkVerification.verified) {
         'string source, string region, string disease, uint256 riskScore, string summary'
       ),
       [
-        'CDC Open Data + Open-Meteo + Gemini',
+        'CDC Open Data + Open-Meteo + Carbon Intensity + Gemini',
         geminiResponse.region,
         geminiResponse.disease,
         BigInt(geminiResponse.riskScore),

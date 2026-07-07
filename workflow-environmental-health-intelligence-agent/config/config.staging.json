@@ -1,8 +1,9 @@
 {
   "schedule": "*/10 * * * *",
   "chainSelectorName": "ethereum-testnet-sepolia",
-  "cdcApiUrl": "https://data.cdc.gov/resource/6jg4-xsqq.json?$select=state,week_ending_date,weekly_rate,cumulative_rate&$where=agecat_label='All'%20AND%20sex_label='All'%20AND%20race_label='All'%20AND%20rate_type='Observed'&$order=week_ending_date%20DESC&$limit=10",
+  "cdcApiUrl": "https://data.cdc.gov/resource/6jg4-xsqq.json?$limit=3",
   "openMeteoApiUrl": "https://api.open-meteo.com/v1/forecast",
+  "carbonIntensityApiUrl": "https://api.carbonintensity.org.uk/intensity",
   "geminiApiUrl": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent",
   "alertThreshold": "30",
   "healthAlertRegistryAddress": "0x54910B770A045c04672Cb53Db4b0b80812237370",
