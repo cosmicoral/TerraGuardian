@@ -3,19 +3,19 @@ const modules = [
     icon: "🦠",
     title: "Public Health",
     status: "Active",
-    text: "CDC Open Data and Gemini health risk analysis",
+    text: "CDC Open Data and Gemini health-risk analysis",
   },
   {
     icon: "🌡️",
     title: "Climate",
     status: "Active",
-    text: "Live Open-Meteo climate risk monitoring",
+    text: "Open-Meteo climate-risk evaluation",
   },
   {
     icon: "🌱",
     title: "ESG",
     status: "Active",
-    text: "UK grid carbon intensity risk evaluation",
+    text: "UK grid carbon-intensity monitoring",
   },
   {
     icon: "🔐",
@@ -24,10 +24,10 @@ const modules = [
     text: "Groth16 proof finalized on zkVerify Volta",
   },
   {
-    icon: "📈",
-    title: "The Graph",
-    status: "Planned",
-    text: "Index on-chain alerts for historical dashboards",
+    icon: "🔗",
+    title: "Integration",
+    status: "Next",
+    text: "Automate CRE-to-proof submission and receipt consumption",
   },
 ];
 
@@ -40,13 +40,10 @@ function ModuleGrid() {
           className="rounded-3xl border border-slate-800 bg-slate-900/70 p-5"
         >
           <div className="text-3xl">{module.icon}</div>
-
           <h3 className="mt-4 text-xl font-bold">{module.title}</h3>
-
           <p className="mt-2 text-sm font-semibold text-cyan-300">
             {module.status}
           </p>
-
           <p className="mt-3 text-sm leading-6 text-slate-400">
             {module.text}
           </p>

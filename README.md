@@ -48,37 +48,31 @@ Climate Risk Logic                 ESG Risk Logic
         Deterministic Decision Gate
       (Health + Climate + ESG Signals)
                       │
-                      ▼
-              Generate Groth16 Proof
-                      │
-                      ▼
-                Submit Proof to zkVerify Volta
-                       │
-                       ▼
-                Proof Finalized
-                       │
-                       ▼
-                Statement Hash
-                       │
-                       ▼
-          Chainlink CRE Workflow
-                      │
-                      ▼
-        HealthAlertRegistry.sol
-                      │
-                      ▼
-            Ethereum Sepolia
-                      │
-                      ▼
-             React Dashboard
+          ┌───────────┴───────────┐
+          │                       │
+          ▼                       ▼
+ Chainlink CRE Pipeline     zkVerify Proof Pipeline
+          │                       │
+          ▼                       ▼
+ Generate CRE Report       Generate Groth16 Proof
+          │                       │
+          ▼                       ▼
+ HealthAlertRegistry.sol   Submit to zkVerify Volta
+          │                       │
+          ▼                       ▼
+ Ethereum Sepolia          Proof Finalized
+          │                       │
+          ▼                       ▼
+ React Dashboard           Statement Hash
 ```
 
+---
 The platform combines **AI inference** with **deterministic decision logic**.
 
 - **Gemini 2.5 Flash** analyzes public health data from CDC Open Data.
 - **Climate Risk Logic** evaluates live weather conditions from Open-Meteo.
 - **ESG Risk Logic** evaluates UK grid carbon intensity from the Carbon Intensity API.
-- A deterministic Decision Gate aggregates all three signals before generating a Groth16 zero-knowledge proof that is independently verified by zkVerify Volta.
+-  A deterministic Decision Gate aggregates all three signals before deciding whether the CRE workflow should publish an alert. The same decision inputs are also used by a separate Groth16 proof pipeline that is independently verified on zkVerify Volta.
 - Chainlink CRE publishes approved alerts to the deployed Solidity smart contract on Ethereum Sepolia.
 ---
 
@@ -102,17 +96,20 @@ The platform combines **AI inference** with **deterministic decision logic**.
 
 7. If one or more thresholds are exceeded:
 
-   - generate a Groth16 proof
-   - submit the proof to zkVerify Volta
-   - receive a finalized statement hash
-   - publish a verified environmental decision through the deployed Solidity contract
+   - generate an environmental decision payload
+   - create a deterministic proof commitment
+   - publish the approved alert through the deployed Solidity contract
 
-8. Otherwise:
+8. The separate zkVerify pipeline:
 
-   - skip blockchain publication
+   - encodes the decision inputs in a Circom circuit
+   - generates and locally verifies a Groth16 proof
+   - submits the proof to zkVerify Volta Testnet
+   - receives a finalized statement hash
 
-9. The React dashboard reads the latest alerts directly from the deployed Sepolia contract.
+9. Otherwise, the CRE workflow skips blockchain publication.
 
+10. The React dashboard reads the latest alerts directly from the deployed Sepolia contract.
 ---
 
 # Agent Decision Logic
@@ -134,7 +131,7 @@ climateRisk >= climateThreshold
 ## ESG
 
 ```
-carbonIntensity >= esgThreshold
+esgRisk >= esgThreshold
 ```
 
 If one or more conditions are satisfied:
