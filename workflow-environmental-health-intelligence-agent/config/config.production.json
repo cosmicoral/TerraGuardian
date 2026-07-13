@@ -1,7 +1,11 @@
 {
   "schedule": "*/10 * * * *",
   "chainSelectorName": "ethereum-testnet-sepolia",
-  "apiUrl": "https://generativelanguage.googleapis.com",
-  "healthAlertRegistryAddress": "TODO_HEALTHALERTREGISTRY_ADDRESS",
+  "cdcApiUrl": "https://data.cdc.gov/resource/6jg4-xsqq.json?$limit=3",
+  "openMeteoApiUrl": "https://api.open-meteo.com/v1/forecast",
+  "carbonIntensityApiUrl": "https://api.carbonintensity.org.uk/intensity",
+  "geminiApiUrl": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent",
+  "alertThreshold": "30",
+  "healthAlertRegistryAddress": "0x54910B770A045c04672Cb53Db4b0b80812237370",
   "gasLimit": "500000"
 }

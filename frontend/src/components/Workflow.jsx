@@ -1,71 +1,43 @@
-const creSteps = [
-  "Public Data",
-  "Gemini Analysis",
-  "Decision Gate",
-  "CRE Report",
-  "Sepolia Registry",
-  "React Dashboard",
+import workflowIllustration from "../assets/workflow-constellation.svg";
+
+const primarySteps = [
+  ["01", "Data", "CDC · climate · carbon"],
+  ["02", "AI", "Gemini health analysis"],
+  ["03", "Decision", "Deterministic gate"],
+  ["04", "CRE", "Signed report"],
+  ["05", "Sepolia", "Health registry"],
 ];
 
 const proofSteps = [
-  "Decision Input",
-  "Circom Circuit",
-  "Groth16 Proof",
-  "zkVerify Volta",
-  "Finalized Statement",
+  ["A", "Circom", "Sample decision hash"],
+  ["B", "Groth16", "snarkjs proof"],
+  ["C", "zkVerify", "Historical Volta finalization"],
 ];
-
-function StepGrid({ title, steps }) {
-  return (
-    <div className="mt-6">
-      <h3 className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-400">
-        {title}
-      </h3>
-
-      <div className="mt-3 grid gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
-        {steps.map((step, index) => (
-          <div
-            key={step}
-            className="rounded-2xl border border-slate-800 bg-slate-950 p-4 text-center"
-          >
-            <p className="text-xs uppercase tracking-wider text-slate-500">
-              Step {index + 1}
-            </p>
-
-            <p className="mt-2 font-semibold">{step}</p>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
 
 function Workflow() {
   return (
-    <section className="mt-6 rounded-[2rem] border border-slate-800 bg-slate-900/60 p-6">
-      <p className="text-sm font-semibold uppercase tracking-[0.25em] text-cyan-300">
-        System Workflow
-      </p>
-
-      <h2 className="mt-2 text-xl font-bold">
-        Environmental Decision and Verification Pipelines
-      </h2>
-
-      <StepGrid
-        title="Chainlink CRE Decision Pipeline"
-        steps={creSteps}
-      />
-
-      <StepGrid
-        title="zkVerify Proof Pipeline"
-        steps={proofSteps}
-      />
-
-      <p className="mt-6 text-sm leading-6 text-slate-400">
-        Both pipelines are operational in the current prototype. Automated
-        CRE-to-zkVerify orchestration, aggregation receipts, and
-        destination-chain receipt verification remain future work.
-      </p>
+    <section id="architecture" className="module-section architecture-section chapter-section" data-chapter="06">
+      <div className="section-heading"><div><div className="chapter-question"><span>06</span><p>How do the independent systems interact?</p></div><div className="eyebrow"><span /> System architecture</div><h2>Two honest, independent pipelines.</h2><p>The CRE publication path and the proof demonstration are intentionally separate.</p></div></div>
+      <article className="glass-card workflow-card">
+        <img className="workflow-card__illustration" src={workflowIllustration} alt="Parallel CRE and zkVerify pipeline illustration" />
+        <div className="pipeline">
+          <div className="pipeline__label"><span>Primary</span><strong>Chainlink CRE decision pipeline</strong><small>Operational workflow path</small></div>
+          <div className="pipeline__steps">
+            {primarySteps.map(([number, title, detail], index) => (
+              <div className="pipeline-step motion-reveal" style={{ "--reveal-delay": `${index * 0.08}s` }} key={title}><span>{number}</span><strong>{title}</strong><small>{detail}</small>{index < primarySteps.length - 1 ? <i>→</i> : null}</div>
+            ))}
+          </div>
+        </div>
+        <div className="pipeline pipeline--proof">
+          <div className="pipeline__label"><span>Independent</span><strong>Groth16 proof demo</strong><small>No automatic CRE handoff</small></div>
+          <div className="pipeline__steps pipeline__steps--proof">
+            {proofSteps.map(([number, title, detail], index) => (
+              <div className="pipeline-step" key={title}><span>{number}</span><strong>{title}</strong><small>{detail}</small>{index < proofSteps.length - 1 ? <i>→</i> : null}</div>
+            ))}
+          </div>
+        </div>
+      </article>
+      <div className="chapter-transition" aria-hidden="true"><span /><i /></div>
     </section>
   );
 }

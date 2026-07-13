@@ -1,16 +1,29 @@
-# React + Vite
+# TerraGuardian Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Premium React dashboard for the TerraGuardian Encode Club Remix AI Bootcamp final project.
 
-Currently, two official plugins are available:
+## Data boundaries
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- Health records are read from the configured Ethereum Sepolia registry.
+- Climate records use the latest registry entry when available and otherwise use live Open-Meteo data.
+- Carbon-intensity data is read from the UK Carbon Intensity API.
+- The Decision Gate is a client-side threshold preview, not a CRE execution receipt.
+- The zkVerify panel displays one historical independent Groth16 submission.
 
-## React Compiler
+Read operations use a public JSON-RPC provider and do not request wallet access. The current frontend does not expose contract writes.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Commands
 
-## Expanding the ESLint configuration
+```bash
+npm install
+npm run dev
+npm run lint
+npm run build
+```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Optional configuration
+
+```text
+VITE_SEPOLIA_RPC_URL=
+VITE_HEALTH_ALERT_REGISTRY_ADDRESS=
+```

@@ -1,13 +1,44 @@
-export async function getCarbonIntensity(){
-    const res = await fetch(
-        "https://api.carbonintensity.org.uk/intensity"
-    );
-    const json = await res.json();
-    const data = json.data[0];
+import {
+  fetchJson,
+  requireFiniteNumber,
+  requireRecord,
+  requireString,
+} from "./validation";
 
-    return {
-        actual: data.intensity.actual,
-        forecast: data.intensity.forcast,
-        index: data.intensity.index,
-    };
+const CARBON_INTENSITY_URL =
+  "https://api.carbonintensity.org.uk/intensity";
+
+export async function getCarbonIntensity() {
+  const response = requireRecord(
+    await fetchJson(CARBON_INTENSITY_URL, "Carbon Intensity request"),
+    "Carbon Intensity response",
+  );
+
+  if (!Array.isArray(response.data) || response.data.length === 0) {
+    throw new Error("Carbon Intensity response contains no data");
+  }
+
+  const data = requireRecord(response.data[0], "Carbon Intensity data");
+  const intensity = requireRecord(
+    data.intensity,
+    "Carbon Intensity measurement",
+  );
+  const forecast = requireFiniteNumber(
+    intensity.forecast,
+    "Carbon Intensity forecast",
+  );
+  const actual =
+    intensity.actual === null || intensity.actual === undefined
+      ? forecast
+      : requireFiniteNumber(intensity.actual, "Carbon Intensity actual");
+  const index = requireString(intensity.index, "Carbon Intensity index");
+
+  return {
+    actual,
+    forecast,
+    index,
+    from: requireString(data.from, "Carbon Intensity start time"),
+    to: requireString(data.to, "Carbon Intensity end time"),
+    source: "Carbon Intensity API",
+  };
 }

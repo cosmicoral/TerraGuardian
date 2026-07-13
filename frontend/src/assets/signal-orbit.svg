@@ -1,0 +1,48 @@
+<svg width="720" height="720" viewBox="0 0 720 720" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="orbit-line" x1="90" y1="98" x2="650" y2="620" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#67E8F9" stop-opacity="0"/>
+      <stop offset=".45" stop-color="#67E8F9" stop-opacity=".62"/>
+      <stop offset=".78" stop-color="#6EE7B7" stop-opacity=".48"/>
+      <stop offset="1" stop-color="#A78BFA" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="node-fill">
+      <stop stop-color="#ECFEFF"/>
+      <stop offset=".35" stop-color="#67E8F9"/>
+      <stop offset="1" stop-color="#0891B2" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="orbit-glow" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur stdDeviation="6"/>
+    </filter>
+    <style>
+      .orbit-dash { stroke-dasharray: 7 14; animation: orbit-flow 14s linear infinite; }
+      .orbit-dash--slow { animation-duration: 22s; animation-direction: reverse; }
+      .orbit-node { transform-box: fill-box; transform-origin: center; animation: orbit-pulse 4.8s ease-in-out infinite; }
+      .orbit-node:nth-of-type(2) { animation-delay: -1.4s; }
+      .orbit-node:nth-of-type(3) { animation-delay: -2.8s; }
+      @keyframes orbit-flow { to { stroke-dashoffset: -210; } }
+      @keyframes orbit-pulse { 0%,100% { opacity:.5; transform:scale(.82); } 50% { opacity:1; transform:scale(1.12); } }
+      @media (prefers-reduced-motion: reduce) { .orbit-dash,.orbit-node { animation:none; } }
+    </style>
+  </defs>
+  <ellipse cx="360" cy="360" rx="295" ry="186" transform="rotate(-18 360 360)" stroke="url(#orbit-line)" stroke-width="1.4"/>
+  <ellipse class="orbit-dash" cx="360" cy="360" rx="235" ry="308" transform="rotate(38 360 360)" stroke="url(#orbit-line)" stroke-width="1.2"/>
+  <path class="orbit-dash orbit-dash--slow" d="M85 438C202 160 457 110 647 275C725 343 666 528 478 624" stroke="url(#orbit-line)" stroke-width="1.2"/>
+  <path d="M114 248 254 154l151 71 166-84M126 507l132-64 137 102 190-81" stroke="#A5F3FC" stroke-opacity=".15" stroke-dasharray="3 10"/>
+  <g opacity=".5" filter="url(#orbit-glow)" fill="#22D3EE">
+    <circle cx="114" cy="248" r="11"/><circle cx="405" cy="225" r="9"/><circle cx="585" cy="464" r="12"/>
+  </g>
+  <g fill="#06131F" stroke="#A5F3FC" stroke-opacity=".58">
+    <circle cx="114" cy="248" r="5"/><circle cx="254" cy="154" r="4"/><circle cx="405" cy="225" r="5"/><circle cx="571" cy="141" r="4"/>
+    <circle cx="126" cy="507" r="4"/><circle cx="258" cy="443" r="5"/><circle cx="395" cy="545" r="4"/><circle cx="585" cy="464" r="5"/>
+  </g>
+  <g class="orbit-node">
+    <circle cx="114" cy="248" r="18" fill="url(#node-fill)" opacity=".2"/><circle cx="114" cy="248" r="3" fill="#ECFEFF"/>
+  </g>
+  <g class="orbit-node">
+    <circle cx="405" cy="225" r="16" fill="url(#node-fill)" opacity=".2"/><circle cx="405" cy="225" r="3" fill="#ECFEFF"/>
+  </g>
+  <g class="orbit-node">
+    <circle cx="585" cy="464" r="19" fill="url(#node-fill)" opacity=".2"/><circle cx="585" cy="464" r="3" fill="#ECFEFF"/>
+  </g>
+</svg>

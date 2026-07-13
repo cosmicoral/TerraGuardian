@@ -1,0 +1,62 @@
+<svg width="1200" height="760" viewBox="0 0 1200 760" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="screen-bg" x1="72" y1="52" x2="1118" y2="714" gradientUnits="userSpaceOnUse"><stop stop-color="#0A1A2A"/><stop offset=".56" stop-color="#06121E"/><stop offset="1" stop-color="#030A12"/></linearGradient>
+    <linearGradient id="accent" x1="130" y1="120" x2="1020" y2="650" gradientUnits="userSpaceOnUse"><stop stop-color="#67E8F9"/><stop offset=".52" stop-color="#34D399"/><stop offset="1" stop-color="#A78BFA"/></linearGradient>
+    <linearGradient id="chart" x1="642" y1="562" x2="1037" y2="440" gradientUnits="userSpaceOnUse"><stop stop-color="#22D3EE" stop-opacity=".08"/><stop offset="1" stop-color="#34D399" stop-opacity=".5"/></linearGradient>
+    <radialGradient id="map-glow"><stop stop-color="#22D3EE" stop-opacity=".2"/><stop offset="1" stop-color="#22D3EE" stop-opacity="0"/></radialGradient>
+    <filter id="soft-glow" x="-70%" y="-70%" width="240%" height="240%"><feGaussianBlur stdDeviation="10"/></filter>
+    <clipPath id="screen"><rect x="28" y="28" width="1144" height="704" rx="34"/></clipPath>
+    <style>
+      .command-path { stroke-dasharray: 6 11; animation: command-flow 12s linear infinite; }
+      .command-dot { animation: command-pulse 4s ease-in-out infinite; }
+      .command-dot:nth-of-type(2) { animation-delay:-1.2s; }
+      .command-dot:nth-of-type(3) { animation-delay:-2.3s; }
+      .command-chart { stroke-dasharray: 520; animation: command-draw 5.5s ease-in-out infinite alternate; }
+      @keyframes command-flow { to { stroke-dashoffset:-170; } }
+      @keyframes command-pulse { 0%,100% { opacity:.45; } 50% { opacity:1; } }
+      @keyframes command-draw { from { stroke-dashoffset:100; } to { stroke-dashoffset:0; } }
+      @media (prefers-reduced-motion: reduce) { .command-path,.command-dot,.command-chart { animation:none; } }
+    </style>
+  </defs>
+  <g clip-path="url(#screen)">
+    <rect x="28" y="28" width="1144" height="704" rx="34" fill="url(#screen-bg)"/>
+    <path d="M28 108H1172M248 108V732" stroke="#A5F3FC" stroke-opacity=".09"/>
+    <path d="M68 65h21m12 0h21m12 0h21" stroke="#A5F3FC" stroke-opacity=".24" stroke-width="4" stroke-linecap="round"/>
+    <circle cx="1097" cy="68" r="18" fill="#0B2530" stroke="#67E8F9" stroke-opacity=".22"/><path d="m1091 68 4 4 8-9" stroke="#6EE7B7" stroke-width="2" stroke-linecap="round"/>
+    <rect x="65" y="142" width="145" height="38" rx="11" fill="#0B2230"/><circle cx="86" cy="161" r="4" fill="#67E8F9"/><path d="M99 155h75m-75 12h48" stroke="#9CCAD6" stroke-opacity=".42" stroke-width="5" stroke-linecap="round"/>
+    <g stroke="#8ED9E5" stroke-opacity=".18" stroke-width="5" stroke-linecap="round">
+      <path d="M70 231h102M70 273h71M70 315h89M70 414h104M70 456h82M70 498h107M70 597h86M70 639h96"/>
+    </g>
+    <g fill="#67E8F9"><circle cx="65" cy="231" r="3"/><circle cx="65" cy="414" r="3"/></g>
+
+    <rect x="284" y="142" width="504" height="336" rx="24" fill="#071827" stroke="#9FEAF2" stroke-opacity=".12"/>
+    <path d="M323 184h118m-118 16h74" stroke="#B8D9E2" stroke-opacity=".45" stroke-width="6" stroke-linecap="round"/>
+    <circle cx="542" cy="323" r="118" fill="url(#map-glow)"/>
+    <circle cx="542" cy="323" r="92" fill="#0B2B38" stroke="#67E8F9" stroke-opacity=".32"/>
+    <path d="M480 258c18-29 45-40 67-28 14 8 22 24 41 28 16 4 29 18 23 32-5 12-21 16-25 30-5 17 10 33 2 49-12 24-51 7-68 27-17 20-37 4-41-18-5-24 12-38 1-55-9-14-14-42 0-65Z" fill="#55B99C" fill-opacity=".58"/>
+    <ellipse cx="542" cy="323" rx="141" ry="48" transform="rotate(-13 542 323)" stroke="#67E8F9" stroke-opacity=".26"/>
+    <ellipse cx="542" cy="323" rx="141" ry="48" transform="rotate(47 542 323)" stroke="#A78BFA" stroke-opacity=".18"/>
+    <path class="command-path" d="M365 390c61-124 263-203 372-86" stroke="url(#accent)" stroke-width="1.5"/>
+    <g fill="#06131F" stroke="#67E8F9"><circle cx="379" cy="371" r="7"/><circle cx="529" cy="254" r="7"/><circle cx="710" cy="291" r="7"/></g>
+    <g class="command-dot" fill="#ECFEFF"><circle cx="379" cy="371" r="2.5"/><circle cx="529" cy="254" r="2.5"/><circle cx="710" cy="291" r="2.5"/></g>
+    <rect x="312" y="427" width="132" height="30" rx="9" fill="#082A31" stroke="#34D399" stroke-opacity=".2"/><circle cx="331" cy="442" r="3" fill="#34D399"/><path d="M343 442h75" stroke="#A7F3D0" stroke-opacity=".55" stroke-width="4" stroke-linecap="round"/>
+
+    <rect x="816" y="142" width="312" height="154" rx="22" fill="#071827" stroke="#9FEAF2" stroke-opacity=".12"/>
+    <path d="M845 174h97m-97 17h56" stroke="#C4E7EC" stroke-opacity=".4" stroke-width="5" stroke-linecap="round"/>
+    <circle cx="870" cy="245" r="24" fill="#0B3138" stroke="#34D399" stroke-opacity=".28"/><path d="m860 245 7 7 15-18" stroke="#6EE7B7" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M914 228h173m-173 18h126m-126 18h148" stroke="#9EC1CD" stroke-opacity=".22" stroke-width="5" stroke-linecap="round"/>
+
+    <rect x="816" y="324" width="312" height="154" rx="22" fill="#071827" stroke="#9FEAF2" stroke-opacity=".12"/>
+    <path d="M845 355h75" stroke="#C4E7EC" stroke-opacity=".4" stroke-width="5" stroke-linecap="round"/>
+    <path d="M845 435V383m45 52v-30m45 30v-66m45 66v-46m45 46v-80m45 80v-57" stroke="url(#accent)" stroke-width="12" stroke-linecap="round" opacity=".65"/>
+
+    <rect x="284" y="506" width="844" height="180" rx="24" fill="#071827" stroke="#9FEAF2" stroke-opacity=".12"/>
+    <path d="M315 540h124m-124 18h73" stroke="#C4E7EC" stroke-opacity=".4" stroke-width="5" stroke-linecap="round"/>
+    <g stroke="#A5F3FC" stroke-opacity=".08"><path d="M620 548h474M620 586h474M620 624h474M620 662h474"/><path d="M664 536v136m78-136v136m78-136v136m78-136v136m78-136v136m78-136v136"/></g>
+    <path d="M320 628h40l28-30 34 18 36-54 42 25 37-14 43 39" stroke="url(#accent)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M622 633c46-30 71-14 105-48 41-42 75 31 111-8 34-36 69-58 105-30 40 32 78-22 151-5v120H622V633Z" fill="url(#chart)"/>
+    <path class="command-chart" d="M622 633c46-30 71-14 105-48 41-42 75 31 111-8 34-36 69-58 105-30 40 32 78-22 151-5" stroke="#6EE7B7" stroke-width="3" stroke-linecap="round"/>
+    <circle cx="1094" cy="542" r="5" fill="#ECFDF5"/><circle cx="1094" cy="542" r="15" fill="#34D399" fill-opacity=".18" filter="url(#soft-glow)"/>
+  </g>
+  <rect x="28.5" y="28.5" width="1143" height="703" rx="33.5" stroke="url(#accent)" stroke-opacity=".3"/>
+</svg>

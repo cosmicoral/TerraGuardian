@@ -1,0 +1,31 @@
+<svg width="1100" height="360" viewBox="0 0 1100 360" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="primary-flow" x1="90" y1="116" x2="1015" y2="116" gradientUnits="userSpaceOnUse"><stop stop-color="#22D3EE"/><stop offset=".54" stop-color="#34D399"/><stop offset="1" stop-color="#60A5FA"/></linearGradient>
+    <linearGradient id="proof-flow" x1="414" y1="270" x2="954" y2="270" gradientUnits="userSpaceOnUse"><stop stop-color="#C4B5FD"/><stop offset="1" stop-color="#7C3AED"/></linearGradient>
+    <filter id="constellation-glow" x="-80%" y="-80%" width="260%" height="260%"><feGaussianBlur stdDeviation="9"/></filter>
+    <style>
+      .flow-line { stroke-dasharray:7 12; animation: constellation-flow 9s linear infinite; }
+      .proof-line { animation-duration:13s; animation-direction:reverse; }
+      .star-node { transform-box:fill-box; transform-origin:center; animation:constellation-pulse 4.5s ease-in-out infinite; }
+      .star-node:nth-of-type(2) { animation-delay:-.9s; }.star-node:nth-of-type(3) { animation-delay:-1.8s; }.star-node:nth-of-type(4) { animation-delay:-2.7s; }.star-node:nth-of-type(5) { animation-delay:-3.6s; }
+      @keyframes constellation-flow { to { stroke-dashoffset:-190; } }
+      @keyframes constellation-pulse { 0%,100% { opacity:.55; transform:scale(.9); } 50% { opacity:1; transform:scale(1.08); } }
+      @media (prefers-reduced-motion:reduce) { .flow-line,.star-node { animation:none; } }
+    </style>
+  </defs>
+  <g opacity=".28" fill="#A5F3FC"><circle cx="52" cy="42" r="1"/><circle cx="170" cy="304" r="1"/><circle cx="346" cy="38" r="1"/><circle cx="742" cy="38" r="1"/><circle cx="1039" cy="310" r="1"/><circle cx="996" cy="54" r="1"/></g>
+  <path class="flow-line" d="M111 116H989" stroke="url(#primary-flow)" stroke-width="2"/>
+  <path class="flow-line proof-line" d="M444 270H944" stroke="url(#proof-flow)" stroke-width="2"/>
+  <path d="M550 153v78" stroke="#64748B" stroke-opacity=".34" stroke-dasharray="3 8"/>
+  <rect x="483" y="181" width="134" height="26" rx="13" fill="#0B1424" stroke="#94A3B8" stroke-opacity=".16"/><path d="M505 194h90" stroke="#94A3B8" stroke-opacity=".35" stroke-width="4" stroke-linecap="round"/>
+  <g opacity=".3" filter="url(#constellation-glow)"><circle cx="111" cy="116" r="22" fill="#22D3EE"/><circle cx="550" cy="116" r="26" fill="#34D399"/><circle cx="989" cy="116" r="22" fill="#60A5FA"/><circle cx="444" cy="270" r="20" fill="#A78BFA"/><circle cx="944" cy="270" r="20" fill="#8B5CF6"/></g>
+  <g fill="#06131F" stroke-width="1.5">
+    <circle cx="111" cy="116" r="34" stroke="#22D3EE"/><circle cx="330" cy="116" r="34" stroke="#67E8F9"/><circle cx="550" cy="116" r="38" stroke="#34D399"/><circle cx="770" cy="116" r="34" stroke="#38BDF8"/><circle cx="989" cy="116" r="34" stroke="#60A5FA"/>
+    <circle cx="444" cy="270" r="30" stroke="#C4B5FD"/><circle cx="694" cy="270" r="30" stroke="#A78BFA"/><circle cx="944" cy="270" r="30" stroke="#8B5CF6"/>
+  </g>
+  <g fill="#ECFEFF">
+    <g class="star-node"><circle cx="111" cy="116" r="6"/></g><g class="star-node"><circle cx="330" cy="116" r="6"/></g><g class="star-node"><circle cx="550" cy="116" r="7"/></g><g class="star-node"><circle cx="770" cy="116" r="6"/></g><g class="star-node"><circle cx="989" cy="116" r="6"/></g>
+  </g>
+  <g fill="#EDE9FE"><circle cx="444" cy="270" r="5"/><circle cx="694" cy="270" r="5"/><circle cx="944" cy="270" r="5"/></g>
+  <g stroke="#A5F3FC" stroke-opacity=".12"><path d="M111 82 46 50m284 32 74-50m366 50 64-44m155 44 70-42"/><path d="m444 300-64 38m314-38 48 37m202-37 71 37"/></g>
+</svg>

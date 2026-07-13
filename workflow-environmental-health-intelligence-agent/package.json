@@ -1,10 +1,11 @@
 {
   "name": "workflow-environmental-health-intelligence-agent",
   "version": "1.0.0",
-  "main": "dist/main.js",
   "private": true,
   "scripts": {
-    "postinstall": "bun x cre-setup"
+    "postinstall": "bun x cre-setup",
+    "typecheck": "tsc --noEmit",
+    "build": "bun x cre-compile main.ts binary.wasm"
   },
   "license": "UNLICENSED",
   "dependencies": {

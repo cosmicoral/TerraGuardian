@@ -1,15 +1,15 @@
 {
   "name": "zkverify",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "description": "Independent TerraGuardian Groth16 proof submission demo",
+  "private": true,
   "type": "module",
+  "scripts": {
+    "generate:input": "node generate-input.js",
+    "verify": "snarkjs groth16 verify build/verification_key.json build/public.json build/proof.json",
+    "submit": "node submit-proof.js"
+  },
+  "license": "ISC",
   "dependencies": {
     "circomlib": "^2.0.5",
     "circomlibjs": "^0.1.7",

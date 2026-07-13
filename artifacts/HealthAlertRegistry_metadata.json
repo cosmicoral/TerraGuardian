@@ -1005,13 +1005,58 @@
 			}
 		],
 		"devdoc": {
+			"details": "This contract intentionally has no access control. Records are      caller-submitted data and do not, by themselves, prove Chainlink CRE      provenance, source-data authenticity, or zkVerify verification.",
+			"events": {
+				"ClimateAlertRecorded(uint256,string,uint8,int256,bytes32,uint256,address)": {
+					"details": "publisher is msg.sender and evidenceHash is an unverified reference."
+				},
+				"EnvironmentalDecisionAlertRecorded(uint256,string,string,uint256,uint8,uint8,bytes32,uint256,address)": {
+					"details": "proofHash is stored as metadata; no proof verification occurs here."
+				},
+				"HealthAlertRecorded(uint256,string,string,string,uint256,string,uint256)": {
+					"details": "This event does not assert who produced or approved the source data."
+				}
+			},
 			"kind": "dev",
-			"methods": {},
+			"methods": {
+				"onReport(bytes)": {
+					"details": "This entry point is permissionless and does not validate a CRE      forwarder or report signature."
+				},
+				"recordEnvironmentalDecisionAlert(string,string,string,uint256,uint8,uint8,bytes32,string)": {
+					"details": "A nonzero proofHash is required as a reference, but is not verified."
+				}
+			},
+			"title": "HealthAlertRegistry",
 			"version": 1
 		},
 		"userdoc": {
+			"events": {
+				"ClimateAlertRecorded(uint256,string,uint8,int256,bytes32,uint256,address)": {
+					"notice": "Emitted when a caller submits a climate alert."
+				},
+				"EnvironmentalDecisionAlertRecorded(uint256,string,string,uint256,uint8,uint8,bytes32,uint256,address)": {
+					"notice": "Emitted when a caller submits a combined environmental decision."
+				},
+				"HealthAlertRecorded(uint256,string,string,string,uint256,string,uint256)": {
+					"notice": "Emitted when a health alert is appended."
+				}
+			},
 			"kind": "user",
-			"methods": {},
+			"methods": {
+				"onReport(bytes)": {
+					"notice": "Decodes and stores the health-alert payload used by the demo CRE         workflow."
+				},
+				"recordAlert(string,string,string,uint256,string)": {
+					"notice": "Appends a health alert submitted directly by the caller."
+				},
+				"recordClimateAlert(string,int256,uint8,uint8,uint8,string,string,bytes32)": {
+					"notice": "Appends caller-supplied climate decision metadata."
+				},
+				"recordEnvironmentalDecisionAlert(string,string,string,uint256,uint8,uint8,bytes32,string)": {
+					"notice": "Appends caller-supplied Environmental Decision metadata."
+				}
+			},
+			"notice": "Demonstration registry for health, climate, and environmental         decision records.",
 			"version": 1
 		}
 	},
@@ -1032,11 +1077,11 @@
 	},
 	"sources": {
 		"contracts/HealthAlertRegistry.sol": {
-			"keccak256": "0xc6872131b2102d4b2c6394fbaec5cb21a4a6d7a0f0e1837364c22aec1b0461b9",
+			"keccak256": "0xe856d3c52182693447c203345974fc3a62f3390573cea4c2c0c26a2ec88c66f3",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://db253aaff5c74fc6d2dcd7473d467d635ee81e9101be3265c19d177e2ba79c95",
-				"dweb:/ipfs/QmbvXx3HbKAbPMWM5NiGgXCbe5H6cUNw9jsmUJNFT27o7y"
+				"bzz-raw://b1d9b1b3840bd24b8a6ba73df099bd0cee1a33284c77e1121baa58ef4e179e99",
+				"dweb:/ipfs/Qmbi2xegEUxoTiYa2EJjK9Rq5L1qXiQY8C67TzcWV3oztV"
 			]
 		}
 	},

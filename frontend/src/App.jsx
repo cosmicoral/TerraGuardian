@@ -1,99 +1,30 @@
-import "./index.css";
-import { useEffect, useState } from "react";
-
-import {
-  getLatestAlert,
-  getLatestClimateAlert,
-} from "./services/blockchain";
-
-import { getClimateRisk } from "./services/climate";
-import { getCarbonIntensity } from "./services/esg";
-
-import Header from "./components/Header";
+import galaxyMesh from "./assets/galaxy-mesh.svg";
 import ClimateModule from "./components/ClimateModule";
-import HealthModule from "./components/HealthModule";
-import ESGModule from "./components/ESGModule";
 import DecisionGate from "./components/DecisionGate";
-import ZkVerifyCard from "./components/ZkVerifyCard";
-import Workflow from "./components/Workflow";
+import ESGModule from "./components/ESGModule";
+import Header from "./components/Header";
+import HealthModule from "./components/HealthModule";
 import ModuleGrid from "./components/ModuleGrid";
+import Workflow from "./components/Workflow";
+import ZkVerifyCard from "./components/ZkVerifyCard";
+import { useDashboardData } from "./hooks/useDashboardData";
 
 function App() {
-  const [alert, setAlert] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [climate, setClimate] = useState(null);
-  const [chainClimate, setChainClimate] = useState(null);
-  const [esg, setEsg] = useState(null);
-
-  useEffect(() => {
-    async function loadAlert() {
-      try {
-        const latest = await getLatestAlert();
-        setAlert(latest);
-      } catch (error) {
-        console.error("Failed to load health alert:", error);
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    async function loadClimate() {
-      try {
-        const latestClimate = await getClimateRisk();
-        setClimate(latestClimate);
-      } catch (error) {
-        console.error("Failed to load climate data:", error);
-      }
-    }
-
-    async function loadChainClimate() {
-      try {
-        const latest = await getLatestClimateAlert();
-        setChainClimate(latest);
-      } catch (error) {
-        console.error("Failed to load on-chain climate alert:", error);
-      }
-    }
-
-    async function loadEsg() {
-      try {
-        const latest = await getCarbonIntensity();
-        setEsg(latest);
-      } catch (error) {
-        console.error("Failed to load ESG data:", error);
-      }
-    }
-
-    loadAlert();
-    loadClimate();
-    loadChainClimate();
-    loadEsg();
-  }, []);
+  const dashboard = useDashboardData();
 
   return (
-    <main className="min-h-screen bg-[#050816] text-white">
-      <div className="mx-auto max-w-7xl px-6 py-8">
-        <Header />
-
-        <HealthModule alert={alert} loading={loading} />
-
-        <ClimateModule
-          climate={climate}
-          chainClimate={chainClimate}
-        />
-
-        <ESGModule esg={esg} />
-
-        <DecisionGate
-          alert={alert}
-          climate={chainClimate || climate}
-          esg={esg}
-        />
-
+    <main className="app-shell" aria-busy={dashboard.loading}>
+      <img className="app-shell__mesh" src={galaxyMesh} alt="" />
+      <div className="app-shell__glow app-shell__glow--one" />
+      <div className="app-shell__glow app-shell__glow--two" />
+      <div className="page-frame">
+        <Header lastUpdated={dashboard.lastUpdated} loading={dashboard.loading} onRefresh={dashboard.refresh} />
+        <HealthModule healthAlert={dashboard.healthAlert} loading={dashboard.loading} error={dashboard.errors.healthAlert} />
+        <ClimateModule climate={dashboard.climate} climateSource={dashboard.climateSource} loading={dashboard.loading} error={dashboard.errors.liveClimate ?? dashboard.errors.recordedClimate} />
+        <ESGModule carbonData={dashboard.carbonData} loading={dashboard.loading} error={dashboard.errors.carbonData} />
+        <DecisionGate healthAlert={dashboard.healthAlert} climate={dashboard.climate} carbonData={dashboard.carbonData} />
         <ZkVerifyCard />
-
         <Workflow />
-
         <ModuleGrid />
       </div>
     </main>

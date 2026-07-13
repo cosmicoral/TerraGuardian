@@ -1,138 +1,82 @@
-import Info from "./Info";
+import esgIcon from "../assets/esg-icon.svg";
+import { calculateEsgRisk } from "../domain/decision";
 
-function calculateEsgRisk(esg) {
-  if (!esg) return 0;
-
-  const forecast = Number(esg.forecast ?? esg.actual ?? 0);
-  const index = String(esg.index ?? "").toLowerCase();
-
-  if (index === "very high" || forecast >= 300) return 5;
-  if (index === "high" || forecast >= 200) return 4;
-  if (index === "moderate" || forecast >= 100) return 3;
-  if (index === "low") return 1;
-
-  return 1;
-}
-
-function ESGModule({ esg }) {
-  const actual =
-    esg?.actual !== undefined ? Number(esg.actual) : undefined;
-
-  const forecast =
-    esg?.forecast !== undefined ? Number(esg.forecast) : undefined;
-
-  const index = String(esg?.index ?? "").toLowerCase();
-
-  const displayIndex = index
-    ? index.replace(/\b\w/g, (character) => character.toUpperCase())
-    : "Loading";
-
-  const esgRisk = calculateEsgRisk(esg);
-
-  const trend =
-    actual !== undefined && forecast !== undefined
-      ? forecast > actual
-        ? "Increasing"
-        : forecast < actual
-          ? "Improving"
-          : "Stable"
-      : "Loading";
-
-  const statusMap = {
-    low: "Optimal",
-    moderate: "Normal",
-    high: "Monitor",
-    "very high": "Critical",
-  };
-
-  const recommendationMap = {
-    low: "Good time for energy-intensive workloads.",
-    moderate: "Normal operating conditions. Continue monitoring.",
-    high: "Consider reducing non-essential electricity usage.",
-    "very high":
-      "Delay non-critical energy-intensive workloads where possible.",
-  };
-
-  const status = statusMap[index] || "Loading";
-
-  const recommendation =
-    recommendationMap[index] || "Awaiting ESG assessment.";
+function ESGModule({ carbonData, loading, error }) {
+  const actual = Number(carbonData?.actual ?? 0);
+  const forecast = Number(carbonData?.forecast ?? 0);
+  const risk = calculateEsgRisk(carbonData);
+  const trend = !carbonData ? "Unavailable" : forecast > actual ? "Rising" : forecast < actual ? "Improving" : "Stable";
+  const recommendation = risk >= 4
+    ? "Defer non-critical energy-intensive workloads."
+    : risk >= 3
+      ? "Monitor grid conditions before scheduling flexible demand."
+      : "Grid conditions support normal operating schedules.";
+  const scale = Math.max(actual, forecast, 350);
+  const actualY = 78 - (actual / scale) * 54;
+  const forecastY = 78 - (forecast / scale) * 54;
+  const riskRadius = 22;
+  const riskCircumference = 2 * Math.PI * riskRadius;
+  const riskOffset = riskCircumference - (risk / 5) * riskCircumference;
+  const trendArrow = forecast > actual ? "↗" : forecast < actual ? "↘" : "→";
 
   return (
-    <section className="mt-6 rounded-[2rem] border border-lime-500/30 bg-lime-950/20 p-6">
-      <div className="flex items-center justify-between gap-4">
-        <div>
-          <p className="text-sm font-semibold uppercase tracking-[0.25em] text-lime-300">
-            ESG Intelligence
-          </p>
-
-          <h2 className="mt-2 text-xl font-bold">
-            UK Carbon Monitoring
-          </h2>
+    <section
+      id="carbon-intelligence"
+      className={`module-section module-section--esg chapter-section ${loading ? "is-loading" : ""}`}
+      data-chapter="03"
+      aria-busy={loading}
+    >
+      <div className="section-heading">
+        <div><div className="chapter-question"><span>03</span><p>What environmental signal is collected?</p></div><div className="eyebrow eyebrow--green"><span /> Carbon intelligence</div><h2>Institutional grid signal monitor.</h2></div>
+        <span className="status-pill" aria-live="polite">{loading ? "Synchronizing" : "Great Britain · Live API"}</span>
+      </div>
+      <article className="glass-card esg-terminal">
+        <div className="esg-terminal__masthead"><div><img src={esgIcon} alt="" /><div><span className="overline">National Grid ESO</span><h3>Carbon intensity</h3></div></div><div className="market-status"><span /> Market data live</div></div>
+        <div className="esg-terminal__grid">
+          <div className="carbon-primary"><span>Current intensity</span><strong>{carbonData ? actual : "—"}</strong><small>gCO₂ / kWh</small><div className="trend-chip">{trendArrow} {trend}</div></div>
+          <div className="carbon-bars">
+            {[["Actual", actual, "cyan"], ["Forecast", forecast, "green"]].map(([label, value, tone]) => (
+              <div className="carbon-bar" key={label}><div><span>{label}</span><strong>{carbonData ? value : "—"}</strong></div><div className="carbon-bar__track"><span className={`carbon-bar__fill carbon-bar__fill--${tone}`} style={{ "--bar-width": carbonData ? `${Math.min(100, (value / scale) * 100)}%` : "0%" }} /></div></div>
+            ))}
+            <div className="carbon-mini-trend" role="img" aria-label={`Carbon intensity changes from ${actual} actual to ${forecast} forecast grams of carbon dioxide per kilowatt-hour`}>
+              <div><span>Actual</span><small>Forecast</small></div>
+              <svg viewBox="0 0 260 96" aria-hidden="true">
+                <defs>
+                  <linearGradient id="carbon-trend-area" x1="0" y1="0" x2="0" y2="1">
+                    <stop stopColor="#67E8F9" stopOpacity=".28" />
+                    <stop offset="1" stopColor="#34D399" stopOpacity="0" />
+                  </linearGradient>
+                  <linearGradient id="carbon-trend-line" x1="18" y1="0" x2="242" y2="0" gradientUnits="userSpaceOnUse">
+                    <stop stopColor="#67E8F9" />
+                    <stop offset="1" stopColor="#6EE7B7" />
+                  </linearGradient>
+                </defs>
+                <path d={`M18 ${actualY} C92 ${actualY}, 168 ${forecastY}, 242 ${forecastY} L242 88 L18 88 Z`} fill="url(#carbon-trend-area)" />
+                <path className={carbonData ? "carbon-mini-trend__line is-visible" : "carbon-mini-trend__line"} pathLength="1" d={`M18 ${actualY} C92 ${actualY}, 168 ${forecastY}, 242 ${forecastY}`} fill="none" stroke="url(#carbon-trend-line)" strokeWidth="3" strokeLinecap="round" />
+                <circle cx="18" cy={actualY} r="4" fill="#67E8F9" opacity={carbonData ? 1 : 0} />
+                <circle cx="242" cy={forecastY} r="4" fill="#6EE7B7" opacity={carbonData ? 1 : 0} />
+              </svg>
+            </div>
+          </div>
+          <div className="carbon-table">
+            <div className="carbon-risk-summary">
+              <div className="carbon-risk-ring" aria-hidden="true">
+                <svg viewBox="0 0 56 56">
+                  <circle className="carbon-risk-ring__track" cx="28" cy="28" r={riskRadius} />
+                  <circle className="carbon-risk-ring__progress" cx="28" cy="28" r={riskRadius} strokeDasharray={riskCircumference} style={{ "--ring-offset": riskOffset }} />
+                </svg>
+                <strong>{carbonData ? risk : "—"}</strong>
+              </div>
+              <p><span>Decision input</span><strong>{carbonData ? `${risk} / 5` : "Unavailable"}</strong></p>
+            </div>
+            <div><span>Grid index</span><strong>{carbonData?.index ?? "Unavailable"}</strong></div>
+            <div><span>Direction</span><strong>{trend}</strong></div>
+            <div><span>Window</span><strong>{carbonData?.from ? new Date(carbonData.from).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }) : "—"}</strong></div>
+          </div>
         </div>
-
-        <span className="rounded-full bg-lime-400/10 px-3 py-1 text-sm font-semibold text-lime-300">
-          {esg ? "Live ESG Data" : "Loading"}
-        </span>
-      </div>
-
-      <div className="mt-5 grid gap-4 md:grid-cols-4">
-        <Info
-          label="Current Carbon"
-          value={actual !== undefined ? `${actual} gCO₂/kWh` : "Loading"}
-        />
-
-        <Info
-          label="Forecast"
-          value={forecast !== undefined ? `${forecast} gCO₂/kWh` : "Loading"}
-        />
-
-        <Info label="Carbon Index" value={displayIndex} />
-
-        <Info label="ESG Risk" value={esg ? `${esgRisk}/5` : "Loading"} />
-
-        <Info label="Trend" value={trend} />
-
-        <Info label="Status" value={status} />
-
-        <Info label="Region" value="Great Britain" />
-
-        <Info
-          label="Source"
-          value={esg?.source || "Carbon Intensity API"}
-        />
-
-        <Info
-          label="Data Window"
-          value={
-            esg?.from && esg?.to
-              ? `${esg.from} — ${esg.to}`
-              : esg?.from || "Live API response"
-          }
-        />
-      </div>
-
-      <div className="mt-5 rounded-3xl border border-slate-800 bg-black/30 p-6">
-        <p className="text-sm font-semibold uppercase tracking-[0.25em] text-lime-300">
-          ESG Assessment
-        </p>
-
-        <p className="mt-4 text-lg leading-8 text-slate-200">
-          Current grid carbon intensity is{" "}
-          {actual !== undefined ? `${actual} gCO₂/kWh` : "loading"} and is
-          classified as {displayIndex}. The short-term forecast is{" "}
-          {forecast !== undefined ? `${forecast} gCO₂/kWh` : "loading"}, with
-          an ESG risk level of {esg ? `${esgRisk}/5` : "loading"}.
-        </p>
-
-        <p className="mt-4 text-sm font-semibold text-lime-300">
-          Recommendation
-        </p>
-
-        <p className="mt-2 text-sm leading-6 text-slate-400">
-          {recommendation}
-        </p>
-      </div>
+        <div className="recommendation"><span>System recommendation</span><p>{carbonData ? recommendation : error ?? "Carbon-intensity data unavailable."}</p></div>
+      </article>
+      <div className="chapter-transition" aria-hidden="true"><span /><i /></div>
     </section>
   );
 }

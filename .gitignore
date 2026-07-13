@@ -8,4 +8,5 @@ dist/
 # Real secrets go into your CRE environment variables
 .cre/
 workflow-environmental-health-intelligence-agent/.cre_build_tmp.js
+workflow-environmental-health-intelligence-agent/binary.js
 .states/workflow-environmental-health-intelligence-agent/binary.wasm

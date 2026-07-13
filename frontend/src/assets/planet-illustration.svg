@@ -1,0 +1,13 @@
+<svg width="620" height="620" viewBox="0 0 620 620" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="planet" cx="0" cy="0" r="1" gradientTransform="translate(225 175) rotate(47) scale(410)"><stop stop-color="#67E8F9"/><stop offset=".32" stop-color="#0E7490"/><stop offset=".72" stop-color="#082F49"/><stop offset="1" stop-color="#020617"/></radialGradient>
+    <linearGradient id="ring" x1="75" y1="150" x2="570" y2="450"><stop stop-color="#34D399" stop-opacity="0"/><stop offset=".5" stop-color="#34D399"/><stop offset="1" stop-color="#22D3EE" stop-opacity="0"/></linearGradient>
+    <filter id="glow"><feGaussianBlur stdDeviation="10"/></filter>
+  </defs>
+  <circle cx="310" cy="310" r="245" fill="#22D3EE" fill-opacity=".16" filter="url(#glow)"/>
+  <circle cx="310" cy="310" r="220" fill="url(#planet)" stroke="#A5F3FC" stroke-opacity=".4"/>
+  <path d="M186 191c38-28 73-25 94-8 18 14 10 41 35 53 31 15 67-4 86 22 18 25-8 52 7 77 12 20 48 21 55 50 5 20-4 42-21 58-40 39-91 66-148 74-26-25-22-58-45-76-22-18-50-15-68-38-25-33-7-66-21-94-13-25-44-33-49-66 18-20 42-38 71-52Z" fill="#34D399" fill-opacity=".32"/>
+  <path d="M112 363c121 68 293 81 418 10M118 246c126-50 284-42 394 20M310 90c-62 99-66 321 6 441M183 132c82 83 166 265 192 377" stroke="#CFFAFE" stroke-opacity=".2"/>
+  <ellipse cx="310" cy="310" rx="286" ry="105" transform="rotate(-12 310 310)" stroke="url(#ring)" stroke-width="3"/>
+  <g fill="#ECFEFF"><circle cx="112" cy="348" r="5"/><circle cx="494" cy="231" r="4"/><circle cx="408" cy="449" r="5"/></g>
+</svg>
